@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VR E-commerce Shop</title>
+    <style>
+        /* Basic styles for demonstration purposes */
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        header, main, footer {
+            padding: 20px;
+        }
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .product-card {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+        .vr-view-button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>VR E-commerce Shop</h1>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#products">Products</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="products">
+            <h2>Our Products</h2>
+            <div class="product-grid">
+                <!-- Product cards will be dynamically generated here -->
+                <div class="product-card">
+                    <img src="placeholder-image.jpg" alt="Product 1">
+                    <h3>Product 1</h3>
+                    <p>Description of Product 1</p>
+                    <p>Price: $XX.XX</p>
+                    <button class="vr-view-button">View in VR</button>
+                </div>
+                <!-- More product cards... -->
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 VR E-commerce Shop. All rights reserved.</p>
+    </footer>
+
+    <!-- Placeholder for VR-related scripts -->
+    <script>
+        // VR functionality will be implemented here
+        document.querySelectorAll('.vr-view-button').forEach(button => {
+            button.addEventListener('click', function() {
+                alert('VR view functionality will be implemented here');
+            });
+        });
+    </script>
+</body>
+</html>
