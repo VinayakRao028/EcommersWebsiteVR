@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VR E-commerce Shop</title>
+    <style>
+        /* Basic styling for demonstration purposes */
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        header, main, footer {
+            padding: 20px;
+        }
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        .product-card {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+        .product-card img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>VR E-commerce Shop</h1>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#products">Products</a></li>
+                <li><a href="#vr-experience">VR Experience</a></li>
+                <li><a href="#cart">Cart</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="products">
+            <h2>Our Products</h2>
+            <div class="product-grid">
+                <!-- Product cards will be dynamically generated here -->
+                <div class="product-card">
+                    <img src="placeholder-image.jpg" alt="Product 1">
+                    <h3>Product 1</h3>
+                    <p>$99.99</p>
+                    <button>Add to Cart</button>
+                    <button>View in VR</button>
+                </div>
+                <!-- More product cards... -->
+            </div>
+        </section>
+
+        <section id="vr-experience">
+            <h2>VR Shopping Experience</h2>
+            <p>Experience our products in virtual reality! Click the "View in VR" button on any product to enter our immersive VR shopping environment.</p>
+            <!-- Placeholder for VR viewer or instructions -->
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 VR E-commerce Shop. All rights reserved.</p>
+    </footer>
+
+    <!-- Placeholder for JavaScript files -->
+    <script src="shop.js"></script>
+</body>
+</html>

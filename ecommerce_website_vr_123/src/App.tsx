@@ -1,0 +1,1 @@
+// Converted TypeScript code would go here

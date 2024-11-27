@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart - VR Ecommerce</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/products">Products</a></li>
+                <li><a href="/cart" class="active">Cart</a></li>
+                <li><a href="/account">Account</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Your Shopping Cart</h1>
+        <div id="cart-items">
+            <!-- Cart items will be dynamically inserted here -->
+        </div>
+        <div id="cart-summary">
+            <p>Subtotal: <span id="subtotal">$0.00</span></p>
+            <p>Tax: <span id="tax">$0.00</span></p>
+            <p>Total: <span id="total">$0.00</span></p>
+        </div>
+        <button id="checkout-button">Proceed to Checkout</button>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 VR Ecommerce. All rights reserved.</p>
+    </footer>
+
+    <script src="/static/js/cart.js"></script>
+</body>
+</html>
