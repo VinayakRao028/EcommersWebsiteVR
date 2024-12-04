@@ -1,0 +1,2 @@
+font-awesome==5.15.3
+pytest==6.2.4

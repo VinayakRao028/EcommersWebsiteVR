@@ -1,0 +1,27 @@
+{
+  "name": "EcommersWebsiteVR",
+  "version": "1.0.0",
+  "description": "An e-commerce website with VR capabilities",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 8000",
+    "test": "python -m unittest discover tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/EcommersWebsiteVR.git"
+  },
+  "keywords": [
+    "ecommerce",
+    "vr",
+    "shopping"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "font-awesome": "^5.15.3"
+  },
+  "devDependencies": {
+    "pytest": "^6.2.4"
+  }
+}
