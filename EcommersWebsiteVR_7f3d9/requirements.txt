@@ -1,0 +1,2 @@
+Flask==2.1.0
+font-awesome==5.15.3
