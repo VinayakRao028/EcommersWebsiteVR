@@ -1,0 +1,19 @@
+{
+  "name": "EcommersWebsiteVR",
+  "version": "1.0.0",
+  "description": "An e-commerce website with VR capabilities",
+  "main": "src/static/js/main.py",
+  "scripts": {
+    "start": "python src/static/js/main.py",
+    "test": "python -m pytest tests"
+  },
+  "dependencies": {
+    "flask": "^2.0.1",
+    "tailwindcss": "^2.2.19"
+  },
+  "devDependencies": {
+    "pytest": "^6.2.5"
+  },
+  "author": "Your Name",
+  "license": "MIT"
+}
