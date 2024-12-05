@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - Cara</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/tailwind.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+</head>
+<body class="font-sans">
+    <section id="header" class="flex items-center justify-between p-5 bg-white shadow-md">
+        <a href="#"><img src="{{ url_for('static', filename='images/logo.png') }}" class="h-10" alt=""></a>
+        
+        <div>
+            <ul class="flex space-x-6 items-center">
+                <li><a class="text-gray-700 hover:text-blue-500" href="index.html">Home</a></li>
+                <li><a class="text-gray-700 hover:text-blue-500" href="shop.html">Shop</a></li>
+                <li><a class="text-gray-700 hover:text-blue-500 font-bold" href="blog.html">Blog</a></li>
+                <li><a class="text-gray-700 hover:text-blue-500" href="about.html">About</a></li>
+                <li><a class="text-gray-700 hover:text-blue-500" href="contact.html">Contact</a></li>
+                <li><a class="text-gray-700 hover:text-blue-500" href="cart.html"><i class="fa-solid fa-bag-shopping"></i></a></li>
+            </ul>
+        </div>
+    </section>
+
+    <section id="page-header" class="bg-cover bg-center h-64 flex flex-col justify-center items-center text-white" style="background-image: url('{{ url_for('static', filename='images/banner/b19.jpg') }}');">
+        <h2 class="text-4xl font-bold mb-2">#readmore</h2>
+        <p class="text-lg">Read all case studies about our products!</p>
+    </section>
+
+    <section id="blog" class="container mx-auto py-16">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+            <div class="blog-box flex flex-col md:flex-row">
+                <div class="blog-img w-full md:w-1/2">
+                    <img src="{{ url_for('static', filename='images/blog/b1.jpg') }}" class="w-full h-auto" alt="">
+                </div>
+                <div class="blog-details w-full md:w-1/2 p-4">
+                    <h4 class="text-2xl font-bold mb-2">The Cotton-Jersey Zip-Up Hoodie</h4>
+                    <p class="text-gray-600 mb-4">Kickstarter man braid godard coloring book. Raclette waistcoat selfies yr wolf chartreuse hexagon irony, godard...</p>
+                    <a href="#" class="text-blue-500 hover:underline">CONTINUE READING</a>
+                </div>
+                <h1 class="text-5xl font-bold text-gray-200 absolute top-0 left-0 -z-10">13/01</h1>
+            </div>
+            <!-- Repeat the blog-box structure for other blog posts -->
+        </div>
+    </section>
+
+    <section id="pagination" class="text-center py-8">
+        <a href="#" class="inline-block px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">1</a>
+        <a href="#" class="inline-block px-4 py-2 bg-white text-blue-500 rounded hover:bg-gray-100">2</a>
+        <a href="#" class="inline-block px-4 py-2 bg-white text-blue-500 rounded hover:bg-gray-100"><i class="fas fa-long-arrow-alt-right"></i></a>
+    </section>
+
+    <section id="newsletter" class="bg-blue-900 py-16">
+        <div class="container mx-auto flex flex-col md:flex-row items-center justify-between">
+            <div class="text-white mb-6 md:mb-0">
+                <h4 class="text-2xl font-bold mb-2">Sign Up For Newsletters</h4>
+                <p class="text-gray-300">Get E-mail updates about our latest shop and <span class="text-yellow-400">special offers.</span></p>
+            </div>
+            <div class="form">
+                <input type="text" placeholder="Your email address" class="py-2 px-4 rounded-l focus:outline-none">
+                <button class="bg-blue-500 text-white py-2 px-4 rounded-r hover:bg-blue-600">Sign Up</button>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-gray-100 py-16">
+        <div class="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div class="col-span-1">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" class="mb-4" alt="">
+                <h4 class="font-bold mb-2">Contact</h4>
+                <p><strong>Address:</strong> 562 Wellington Road, Street 32, San Francisco</p>
+                <p><strong>Phone:</strong> +01 2222 365 /(+91) 01 2345 6789</p>
+                <p><strong>Hours:</strong> 10:00 - 18:00, Mon - Sat</p>
+                <div class="mt-4">
+                    <h4 class="font-bold mb-2">Follow Us</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-600 hover:text-blue-500"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-gray-600 hover:text-blue-500"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-600 hover:text-blue-500"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-600 hover:text-blue-500"><i class="fab fa-pinterest-p"></i></a>
+                        <a href="#" class="text-gray-600 hover:text-blue-500"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-span-1">
+                <h4 class="font-bold mb-2">About</h4>
+                <ul class="space-y-2">
+                    <li><a href="#" class="text-gray-600 hover:text-blue-500">About Us</a></li>
+                    <li><a href="#" class="text-gray-600 hover:text-blue-500">Delivery Information</a></li>
+                    <li><a href="#" class="text-gray-600 hover:text-blue-500">Privacy Policy</a></li>
+                    <li><a href="#" class="text-gray-600 hover:text-blue-500">Terms & Conditions</a></li>
+                    <li><a href="#" class="text-gray-600 hover:text-blue-500">Contact Us</a></li>
+                </ul>
+            </div>
+
+            <div class="col-span-1">
+                <h4 class="font-bold mb-2">My Account</h4>
+                <ul class="space-y-2">
+                    <li><a href="#" class="text-gray-600 hover:text-blue-500">Sign In</a></li>
+                    <li><a href="#" class="text-gray-600 hover:text-blue-500">View Cart</a></li>
+                    <li><a href="#" class="text-gray-600 hover:text-blue-500">My Wishlist</a></li>
+                    <li><a href="#" class="text-gray-600 hover:text-blue-500">Track My Order</a></li>
+                    <li><a href="#" class="text-gray-600 hover:text-blue-500">Help</a></li>
+                </ul>
+            </div>
+
+            <div class="col-span-1">
+                <h4 class="font-bold mb-2">Install App</h4>
+                <p class="mb-2">From App Store or Google Play</p>
+                <div class="flex space-x-2 mb-4">
+                    <img src="{{ url_for('static', filename='images/pay/app.jpg') }}" alt="App Store" class="h-10">
+                    <img src="{{ url_for('static', filename='images/pay/play.jpg') }}" alt="Google Play" class="h-10">
+                </div>
+                <p class="mb-2">Secured Payment Gateways</p>
+                <img src="{{ url_for('static', filename='images/pay/pay.png') }}" alt="Payment Methods" class="h-8">
+            </div>
+        </div>
+        <div class="text-center mt-8">
+            <p>&copy; 2021, Tech2 etc - HTML CSS Ecommerce Template</p>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/main.py') }}"></script>
+</body>
+</html>
