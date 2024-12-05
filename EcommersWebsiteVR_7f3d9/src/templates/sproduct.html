@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech2etc Ecommerce Tutorial</title>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/tailwind.css') }}">
+</head>
+
+<body class="font-sans">
+
+    <section id="header" class="flex items-center justify-between p-5 bg-white shadow-md">
+        <a href="#"><img src="{{ url_for('static', filename='images/logo.png') }}" class="h-10" alt=""></a>
+
+        <div>
+            <ul id="navbar" class="flex items-center space-x-6">
+                <li><a class="text-lg font-medium hover:text-blue-600" href="index.html">Home</a></li>
+                <li><a class="text-lg font-medium hover:text-blue-600" href="shop.html">Shop</a></li>
+                <li><a class="text-lg font-medium hover:text-blue-600" href="blog.html">Blog</a></li>
+                <li><a class="text-lg font-medium hover:text-blue-600" href="about.html">About</a></li>
+                <li><a class="text-lg font-medium hover:text-blue-600" href="contact.html">Contact</a></li>
+                <li id="lg-bag"><a class="text-lg font-medium hover:text-blue-600" href="cart.html"><i class="far fa-shopping-bag"></i></a></li>
+                <a href="#" id="close" class="hidden"><i class="far fa-times"></i></a>
+            </ul>
+        </div>
+        <div id="mobile" class="hidden">
+            <a href="cart.html"><i class="far fa-shopping-bag"></i></a>
+            <i id="bar" class="fas fa-outdent"></i>
+        </div>
+    </section>
+
+    <section id="prodetails" class="flex flex-col md:flex-row p-10 mt-10">
+        <div class="single-pro-image w-full md:w-1/2 mb-10 md:mb-0">
+            <img src="{{ url_for('static', filename='images/products/f1.jpg') }}" width="100%" id="MainImg" alt="">
+
+            <div class="small-img-group flex justify-between mt-4">
+                <div class="small-img-col w-24 h-24 cursor-pointer">
+                    <img src="{{ url_for('static', filename='images/products/f1.jpg') }}" width="100%" class="small-img" alt="">
+                </div>
+                <div class="small-img-col w-24 h-24 cursor-pointer">
+                    <img src="{{ url_for('static', filename='images/products/f2.jpg') }}" width="100%" class="small-img" alt="">
+                </div>
+                <div class="small-img-col w-24 h-24 cursor-pointer">
+                    <img src="{{ url_for('static', filename='images/products/f3.jpg') }}" width="100%" class="small-img" alt="">
+                </div>
+                <div class="small-img-col w-24 h-24 cursor-pointer">
+                    <img src="{{ url_for('static', filename='images/products/f4.jpg') }}" width="100%" class="small-img" alt="">
+                </div>
+            </div>
+        </div>
+
+        <div class="single-pro-details w-full md:w-1/2 md:pl-10">
+            <h6 class="text-lg font-semibold mb-2">Home / T-Shirt</h6>
+            <h4 class="text-3xl font-bold mb-4">Men's Fashion T Shirt</h4>
+            <h2 class="text-2xl font-bold mb-4">$139.00</h2>
+            <select class="p-2 mb-4 border rounded">
+                <option>Select Size</option>
+                <option>XL</option>
+                <option>XXL</option>
+                <option>Small</option>
+                <option>Large</option>
+            </select>
+            <input type="number" value="1" class="w-16 p-2 mb-4 border rounded">
+            <button class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">Add To Cart</button>
+            <h4 class="text-xl font-semibold mt-6 mb-4">Product Details</h4>
+            <span class="text-gray-700">The Gildan Ultra Cotton T-shirt is made from a substantial 6.0 oz. per sq. yd. fabric constructed from 100% cotton, this classic fit preshrunk jersey knit provides unmatched comfort with each wear. Featuring a taped neck and shoulder, and a seamless double-needle collar, and available in a range of colors, it offers it all in the ultimate head-turning package.</span>
+        </div>
+    </section>
+
+    <section id="product1" class="text-center p-10">
+        <h2 class="text-3xl font-bold mb-4">Featured Products</h2>
+        <p class="text-gray-600 mb-8">Summer Collection New Modern Design</p>
+        <div class="pro-container flex flex-wrap justify-center">
+            <!-- Product items would go here, using Tailwind classes for styling -->
+        </div>
+    </section>
+
+    <section id="newsletter" class="bg-blue-900 text-white p-10 mt-10">
+        <div class="flex flex-col md:flex-row items-center justify-between">
+            <div class="mb-6 md:mb-0">
+                <h4 class="text-2xl font-bold mb-2">Sign Up For Newsletters</h4>
+                <p class="text-gray-300">Get E-mail updates about our latest shop and <span class="text-yellow-400">special offers.</span></p>
+            </div>
+            <div class="form">
+                <input type="text" placeholder="Your email address" class="p-2 rounded-l">
+                <button class="bg-blue-600 text-white px-4 py-2 rounded-r hover:bg-blue-700">Sign Up</button>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-gray-100 p-10 mt-10">
+        <!-- Footer content would go here, using Tailwind classes for styling -->
+    </footer>
+
+    <script>
+        // JavaScript code would go here
+    </script>
+</body>
+
+</html>
