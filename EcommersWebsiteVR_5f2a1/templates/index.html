@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ecommerce Website</title>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <section id="header">
+        <a href="#"><img src="{{ url_for('static', filename='images/swethlogopng5.png') }}" class="logo" alt="Logo"></a>
+ 
+        <div>
+            <ul id="navbar">
+                <li><a class="active" href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('shop') }}">Shop</a></li>
+                <li><a href="{{ url_for('blog') }}">Blog</a></li>
+                <li><a href="{{ url_for('about') }}">About</a></li>
+                <li><a href="{{ url_for('contact') }}">Contact</a></li>
+                <li id="lg-bag"><a href="{{ url_for('cart') }}"><i class="far fa-shopping-bag"></i></a></li>
+                <a href="#" id="close"><i class="far fa-times"></i></a>
+            </ul>
+        </div>
+        <div id="mobile">
+            <a href="{{ url_for('cart') }}"><i class="far fa-shopping-bag"></i></a>
+            <i id="bar" class="fas fa-outdent"></i>
+        </div>
+    </section>
+
+    <section id="hero">
+        <h4>Trade-in-offer</h4>
+        <h2>Super value deals</h2>
+        <h1>On all products</h1>
+        <p>Save more with coupons & up to 70% off!</p>
+        <button><a href="{{ url_for('shop') }}">Shop Now</a></button>
+    </section>
+
+    <section id="feature" class="section-p1">
+        <div class="fe-box">
+            <img src="{{ url_for('static', filename='images/features/f1.png') }}" alt="Free Shipping">
+            <h6>Free Shipping</h6>
+        </div>
+        <div class="fe-box">
+            <img src="{{ url_for('static', filename='images/features/f2.png') }}" alt="Online Order">
+            <h6>Online Order</h6>
+        </div>
+        <div class="fe-box">
+            <img src="{{ url_for('static', filename='images/features/f3.png') }}" alt="Save Money">
+            <h6>Save Money</h6>
+        </div>
+        <div class="fe-box">
+            <img src="{{ url_for('static', filename='images/features/f4.png') }}" alt="Promotions">
+            <h6>Promotions</h6>
+        </div>
+        <div class="fe-box">
+            <img src="{{ url_for('static', filename='images/features/f5.png') }}" alt="Happy Sell">
+            <h6>Happy Sell</h6>
+        </div>
+        <div class="fe-box">
+            <img src="{{ url_for('static', filename='images/features/f6.png') }}" alt="24/7 Support">
+            <h6>24/7 Support</h6>
+        </div>
+    </section>
+
+    <!-- Rest of the HTML content remains the same -->
+    <!-- ... -->
+
+    <footer class="section-p1">
+        <!-- Footer content remains the same -->
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
