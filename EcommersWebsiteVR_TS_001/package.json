@@ -1,0 +1,26 @@
+{
+  "name": "ecommers-website-vr",
+  "version": "1.0.0",
+  "description": "An ecommerce website with VR features",
+  "main": "src/scripts/main.ts",
+  "scripts": {
+    "start": "tsc && node dist/main.js",
+    "build": "tsc",
+    "test": "jest",
+    "lint": "eslint . --ext .ts"
+  },
+  "dependencies": {
+    "typescript": "^4.5.4"
+  },
+  "devDependencies": {
+    "@types/node": "^16.11.0",
+    "@types/jest": "^27.0.3",
+    "@typescript-eslint/eslint-plugin": "^5.8.0",
+    "@typescript-eslint/parser": "^5.8.0",
+    "eslint": "^8.5.0",
+    "jest": "^27.4.5",
+    "ts-jest": "^27.1.2"
+  },
+  "author": "",
+  "license": "ISC"
+}
