@@ -1,0 +1,38 @@
+{
+  "project": "EcommersWebsiteVR",
+  "version": "1.0.0",
+  "description": "E-commerce website with VR features",
+  "main": "src/pages/index.html",
+  "scripts": {
+    "start": "Open src/pages/index.html in a web browser",
+    "test": "Run tests in tests/script.test.js"
+  },
+  "dependencies": {
+    "font-awesome": "6.4.0"
+  },
+  "structure": {
+    "src": {
+      "css": ["style.css"],
+      "images": {
+        "about": [],
+        "banner": [],
+        "blog": [],
+        "features": [],
+        "pay": [],
+        "people": [],
+        "products": []
+      },
+      "js": ["script.js"],
+      "pages": [
+        "about.html",
+        "blog.html",
+        "cart.html",
+        "contact.html",
+        "index.html",
+        "shop.html",
+        "sproduct.html"
+      ]
+    },
+    "tests": ["script.test.js"]
+  }
+}
