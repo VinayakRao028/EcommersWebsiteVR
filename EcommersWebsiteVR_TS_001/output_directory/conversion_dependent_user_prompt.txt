@@ -1,0 +1,522 @@
+<User_Instructions>
+        Convert the repository from source language to the following target language
+        </User_Instructions>
+
+        <Current_File>
+        target file path - Realtime-Chat-7f8d9e/backend/controllers/chat_controller.py
+ source file path - Realtime-Chat/server/controllers/chatControllers.js
+                                        source file content - import Chat from '../models/chatModel.js';
+import user from '../models/userModel.js';
+
+export const accessChats = async (req, res) => {
+  const { userId } = req.body;
+  if (!userId) res.send({ message: "Provide User's Id" });
+  let chatExists = await Chat.find({
+    isGroup: false,
+    $and: [
+      { users: { $elemMatch: { $eq: userId } } },
+      { users: { $elemMatch: { $eq: req.rootUserId } } },
+    ],
+  })
+    .populate('users', '-password')
+    .populate('latestMessage');
+  chatExists = await user.populate(chatExists, {
+    path: 'latestMessage.sender',
+    select: 'name email profilePic',
+  });
+  if (chatExists.length > 0) {
+    res.status(200).send(chatExists[0]);
+  } else {
+    let data = {
+      chatName: 'sender',
+      users: [userId, req.rootUserId],
+      isGroup: false,
+    };
+    try {
+      const newChat = await Chat.create(data);
+      const chat = await Chat.find({ _id: newChat._id }).populate(
+        'users',
+        '-password'
+      );
+      res.status(200).json(chat);
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
+};
+export const fetchAllChats = async (req, res) => {
+  try {
+    const chats = await Chat.find({
+      users: { $elemMatch: { $eq: req.rootUserId } },
+    })
+      .populate('users')
+      .populate('latestMessage')
+      .populate('groupAdmin')
+      .sort({ updatedAt: -1 });
+    const finalChats = await user.populate(chats, {
+      path: 'latestMessage.sender',
+      select: 'name email profilePic',
+    });
+    res.status(200).json(finalChats);
+  } catch (error) {
+    res.status(500).send(error);
+    console.log(error);
+  }
+};
+export const creatGroup = async (req, res) => {
+  const { chatName, users } = req.body;
+  if (!chatName || !users) {
+    res.status(400).json({ message: 'Please fill the fields' });
+  }
+  const parsedUsers = JSON.parse(users);
+  if (parsedUsers.length < 2)
+    res.send(400).send('Group should contain more than 2 users');
+  parsedUsers.push(req.rootUser);
+  try {
+    const chat = await Chat.create({
+      chatName: chatName,
+      users: parsedUsers,
+      isGroup: true,
+      groupAdmin: req.rootUserId,
+    });
+    const createdChat = await Chat.findOne({ _id: chat._id })
+      .populate('users', '-password')
+      .populate('groupAdmin', '-password');
+    // res.status(200).json(createdChat);
+    res.send(createdChat);
+  } catch (error) {
+    res.sendStatus(500);
+  }
+};
+export const renameGroup = async (req, res) => {
+  const { chatId, chatName } = req.body;
+  if (!chatId || !chatName)
+    res.status(400).send('Provide Chat id and Chat name');
+  try {
+    const chat = await Chat.findByIdAndUpdate(chatId, {
+      $set: { chatName },
+    })
+      .populate('users', '-password')
+      .populate('groupAdmin', '-password');
+    if (!chat) res.status(404);
+    res.status(200).send(chat);
+  } catch (error) {
+    res.status(500).send(error);
+    console.log(error);
+  }
+};
+export const addToGroup = async (req, res) => {
+  const { userId, chatId } = req.body;
+  const existing = await Chat.findOne({ _id: chatId });
+  if (!existing.users.includes(userId)) {
+    const chat = await Chat.findByIdAndUpdate(chatId, {
+      $push: { users: userId },
+    })
+      .populate('groupAdmin', '-password')
+      .populate('users', '-password');
+    if (!chat) res.status(404);
+    res.status(200).send(chat);
+  } else {
+    res.status(409).send('user already exists');
+  }
+};
+export const removeFromGroup = async (req, res) => {
+  const { userId, chatId } = req.body;
+  const existing = await Chat.findOne({ _id: chatId });
+  if (existing.users.includes(userId)) {
+    Chat.findByIdAndUpdate(chatId, {
+      $pull: { users: userId },
+    })
+      .populate('groupAdmin', '-password')
+      .populate('users', '-password')
+      .then((e) => res.status(200).send(e))
+      .catch((e) => res.status(404));
+  } else {
+    res.status(409).send('user doesnt exists');
+  }
+};
+export const removeContact = async (req, res) => {};
+
+
+        </Current_File>
+
+
+        <Target_Language>
+        
+          Python
+          Version: {'techstack': ['Python', 'Flask'], 'code_type': 'backend'}
+          
+          <Technology_Stack>
+          None
+          </Technology_Stack>
+          
+        </Target_Language>
+
+        <Dependency_Tree>
+        ['Realtime-Chat/server/models/chatModel.js', 'Realtime-Chat/server/models/userModel.js']
+        </Dependency_Tree>
+
+  
+        <Generated_Directory_Structure>
+        .
+├── License.md
+├── README.md
+├── backend
+│   ├── config
+│   │   └── db_config.py
+│   ├── controllers
+│   │   ├── chat_controller.py
+│   │   ├── message_controller.py
+│   │   └── user_controller.py
+│   ├── main.py
+│   ├── middleware
+│   │   └── user_middleware.py
+│   ├── models
+│   │   ├── chat_model.py
+│   │   ├── message_model.py
+│   │   └── user_model.py
+│   ├── requirements.txt
+│   ├── routes
+│   │   ├── chat_routes.py
+│   │   ├── message_routes.py
+│   │   └── user_routes.py
+│   └── tests
+│       └── test_user_routes.py
+└── frontend
+    ├── README.md
+    ├── package.json
+    ├── public
+    │   ├── index.html
+    │   ├── manifest.json
+    │   └── robots.txt
+    ├── src
+    │   ├── App.js
+    │   ├── apis
+    │   │   ├── auth.js
+    │   │   ├── chat.js
+    │   │   └── messages.js
+    │   ├── components
+    │   │   ├── Contacts.js
+    │   │   ├── Group.js
+    │   │   ├── MessageHistory.js
+    │   │   ├── Model.js
+    │   │   ├── Profile.js
+    │   │   └── Start.js
+    │   ├── index.js
+    │   ├── pages
+    │   │   ├── Chat.js
+    │   │   ├── Home.js
+    │   │   ├── Login.js
+    │   │   └── Register.js
+    │   ├── redux
+    │   │   ├── activeUserSlice.js
+    │   │   ├── chatsSlice.js
+    │   │   ├── profileSlice.js
+    │   │   └── searchSlice.js
+    │   ├── store.js
+    │   └── utils
+    │       └── logics.js
+    ├── tailwind.config.js
+    └── tests
+        └── App.test.js
+
+17 directories, 44 files
+
+
+The Mappings for the above target files to the respective source files are as follows: 
+{'Realtime-Chat-7f8d9e/README.md': ['Realtime-Chat/README.md'], 'Realtime-Chat-7f8d9e/License.md': ['Realtime-Chat/License.md'], 'Realtime-Chat-7f8d9e/frontend/package.json': ['Realtime-Chat/clients/package.json'], 'Realtime-Chat-7f8d9e/frontend/README.md': ['Realtime-Chat/clients/README.md'], 'Realtime-Chat-7f8d9e/frontend/tailwind.config.js': ['Realtime-Chat/clients/tailwind.config.js'], 'Realtime-Chat-7f8d9e/frontend/public/index.html': ['Realtime-Chat/clients/public/index.html'], 'Realtime-Chat-7f8d9e/frontend/public/manifest.json': ['Realtime-Chat/clients/public/manifest.json'], 'Realtime-Chat-7f8d9e/frontend/public/robots.txt': ['Realtime-Chat/clients/public/robots.txt'], 'Realtime-Chat-7f8d9e/frontend/src/index.js': ['Realtime-Chat/clients/src/index.js'], 'Realtime-Chat-7f8d9e/frontend/src/App.js': ['Realtime-Chat/clients/src/App.js'], 'Realtime-Chat-7f8d9e/frontend/src/store.js': ['Realtime-Chat/clients/src/store.js'], 'Realtime-Chat-7f8d9e/frontend/src/components/Contacts.js': ['Realtime-Chat/clients/src/components/Contacts.jsx'], 'Realtime-Chat-7f8d9e/frontend/src/components/Group.js': ['Realtime-Chat/clients/src/components/Group.jsx'], 'Realtime-Chat-7f8d9e/frontend/src/components/MessageHistory.js': ['Realtime-Chat/clients/src/components/MessageHistory.jsx'], 'Realtime-Chat-7f8d9e/frontend/src/components/Model.js': ['Realtime-Chat/clients/src/components/Model.jsx'], 'Realtime-Chat-7f8d9e/frontend/src/components/Profile.js': ['Realtime-Chat/clients/src/components/Profile.jsx'], 'Realtime-Chat-7f8d9e/frontend/src/components/Start.js': ['Realtime-Chat/clients/src/components/Start.jsx'], 'Realtime-Chat-7f8d9e/frontend/src/pages/Chat.js': ['Realtime-Chat/clients/src/pages/Chat.jsx'], 'Realtime-Chat-7f8d9e/frontend/src/pages/Home.js': ['Realtime-Chat/clients/src/pages/Home.jsx'], 'Realtime-Chat-7f8d9e/frontend/src/pages/Login.js': ['Realtime-Chat/clients/src/pages/Login.jsx'], 'Realtime-Chat-7f8d9e/frontend/src/pages/Register.js': ['Realtime-Chat/clients/src/pages/Regsiter.jsx'], 'Realtime-Chat-7f8d9e/frontend/src/redux/activeUserSlice.js': ['Realtime-Chat/clients/src/redux/activeUserSlice.js'], 'Realtime-Chat-7f8d9e/frontend/src/redux/chatsSlice.js': ['Realtime-Chat/clients/src/redux/chatsSlice.js'], 'Realtime-Chat-7f8d9e/frontend/src/redux/profileSlice.js': ['Realtime-Chat/clients/src/redux/profileSlice.js'], 'Realtime-Chat-7f8d9e/frontend/src/redux/searchSlice.js': ['Realtime-Chat/clients/src/redux/searchSlice.js'], 'Realtime-Chat-7f8d9e/frontend/src/apis/auth.js': ['Realtime-Chat/clients/src/apis/auth.js'], 'Realtime-Chat-7f8d9e/frontend/src/apis/chat.js': ['Realtime-Chat/clients/src/apis/chat.js'], 'Realtime-Chat-7f8d9e/frontend/src/apis/messages.js': ['Realtime-Chat/clients/src/apis/messages.js'], 'Realtime-Chat-7f8d9e/frontend/src/utils/logics.js': ['Realtime-Chat/clients/src/utils/logics.js'], 'Realtime-Chat-7f8d9e/frontend/tests/App.test.js': ['Realtime-Chat-7f8d9e/frontend/src/App.js'], 'Realtime-Chat-7f8d9e/backend/requirements.txt': ['Realtime-Chat/server/package.json'], 'Realtime-Chat-7f8d9e/backend/main.py': ['Realtime-Chat/server/index.js'], 'Realtime-Chat-7f8d9e/backend/controllers/chat_controller.py': ['Realtime-Chat/server/controllers/chatControllers.js'], 'Realtime-Chat-7f8d9e/backend/controllers/message_controller.py': ['Realtime-Chat/server/controllers/messageControllers.js'], 'Realtime-Chat-7f8d9e/backend/controllers/user_controller.py': ['Realtime-Chat/server/controllers/user.js'], 'Realtime-Chat-7f8d9e/backend/models/chat_model.py': ['Realtime-Chat/server/models/chatModel.js'], 'Realtime-Chat-7f8d9e/backend/models/message_model.py': ['Realtime-Chat/server/models/messageModel.js'], 'Realtime-Chat-7f8d9e/backend/models/user_model.py': ['Realtime-Chat/server/models/userModel.js'], 'Realtime-Chat-7f8d9e/backend/routes/chat_routes.py': ['Realtime-Chat/server/routes/chat.js'], 'Realtime-Chat-7f8d9e/backend/routes/message_routes.py': ['Realtime-Chat/server/routes/message.js'], 'Realtime-Chat-7f8d9e/backend/routes/user_routes.py': ['Realtime-Chat/server/routes/user.js'], 'Realtime-Chat-7f8d9e/backend/middleware/user_middleware.py': ['Realtime-Chat/server/middleware/user.js'], 'Realtime-Chat-7f8d9e/backend/config/db_config.py': ['Realtime-Chat/server/mongoDB/connection.js'], 'Realtime-Chat-7f8d9e/backend/tests/test_user_routes.py': ['Realtime-Chat-7f8d9e/backend/routes/user_routes.py']}
+
+
+        </Generated_Directory_Structure>
+        <Task-Dependent_conversion>
+        3. **Dependent Conversion:**
+          - **Objective:** Convert the current file while ensuring compatibility with dependent files.
+          - **Procedure:**
+            - Analyze the current file and its dependencies listed in the <Dependency_Tree>.
+            - Identify constructs that interact with dependent files and require adaptation.
+            - Make sure you follow technology stack as per the <Technology_Stack> provided.
+            - Convert the current file, ensuring it remains compatible with the target language and techstack in the file.
+            - If this is backend code, implement Swagger documentation for all API endpoints.
+            - Do not rely on separate swagger.json files; instead, use inline documentation and automatic Swagger UI generation.
+            - Review dependent files for any necessary changes to maintain compatibility.
+            - Validate the entire set of files for functionality and adherence to best practices.
+            - Document changes and potential issues in the code and dependencies.
+            - List any new packages, libraries, or modules used in the conversion process.
+            - Dependencies should be added based on the language. Ex: Python - requirements.txt, Node.js - package.json.
+        <Output_Format>
+          ```converted
+          <converted_code>
+          ```
+          ```dependencies
+          {
+            "dependencies":  "Object/Array/String" [OPTIONAL],
+            "Libraries":  "Object/Array/String" [OPTIONAL] ,
+            "Scripts": "Object/Array/String" [OPTIONAL] ,
+            "Others": "Object/Array/String" [OPTIONAL],
+            ...
+          }
+          ```
+        </Output_Format>
+        <Glossary>
+        - **Target_Language:** The programming language to which the file is being converted.
+        - **Current_File:** The code of the file that needs conversion.
+        - **Dependency_Tree:** A list of files that are dependent on the current file.
+        - **Generated_Directory_Structure**: In the Generated_Directory_Structure you will find the directory structure on which you are working therefore write your code as per it only.
+        - At the end of each code you are expected to generate a technically detailed summary of the code file above with all the classes, functions and etc. 
+        - First in the summary you will generate the functionality of the code file which file it imports. and in the latter part you will give the classes, function (with their return variables) and etc. Make sure the summary is built as per the language's terminologies.
+        - Summary must be enclosed inside of "```summary" and "```" delimiters
+        - Files except Source Language and Target language keep those files the same. No change would be required in those.
+        - The summary should be a detailed technical overview that includes all functions, logic, variables, return types, classes, and other relevant elements. It should be comprehensive enough to allow another coder to understand and utilize the functionality of the file in a different context. Under 250 Tokens or 220 words
+        - Your Points will be deducted in the score card if the <Output_Format> is not followed.
+        - Your Points will be deducted in the score card if the <FileMappings> is not followed.
+        </Glossary>
+
+         ## Services Swaps
+        Group: API Development
+
+For These `Source Services` In Group API Development:
+  Associated Files:
+  Associated Files:
+  Service: Express.js
+  Description: Web application framework for Node.js
+  Version: 4.17.1 - Latest stable release
+    - Realtime-Chat/server/index.js
+    - Realtime-Chat/server/routes/*.js
+
+Convert It To `Target Services` In Group API Development:
+  Service: Express.js
+  Description: Web application framework for Node.js
+  Version: 4.17.1 - Latest stable release
+    - Realtime-Chat/server/index.js
+    - Realtime-Chat/server/routes/*.js
+
+Group: Database Integration
+
+For These `Source Services` In Group Database Integration:
+  Associated Files:
+  Associated Files:
+  Service: Mongoose
+  Description: Object Data Modeling (ODM) library for MongoDB and Node.js
+  Version: 6.0.13 - Latest version with improved TypeScript support
+    - Realtime-Chat/server/models/*.js
+    - Realtime-Chat/server/controllers/*.js
+
+Convert It To `Target Services` In Group Database Integration:
+  Service: Mongoose
+  Description: Object Data Modeling (ODM) library for MongoDB and Node.js
+  Version: 6.0.13 - Latest version with improved TypeScript support
+    - Realtime-Chat/server/models/*.js
+    - Realtime-Chat/server/controllers/*.js
+
+Group: Component Libraries
+
+For These `Source Services` In Group Component Libraries:
+  Associated Files:
+  Associated Files:
+  Associated Files:
+  Associated Files:
+  Service: Material-UI
+  Description: React UI framework for building responsive web applications
+  Version: 5.11.0 - Latest version with improved customization options
+    - Realtime-Chat/clients/src/components/Model.jsx
+  Service: react-toastify
+  Description: Library for adding toast notifications to React applications
+  Version: 9.1.1 - Latest version with new animation options
+    - Realtime-Chat/clients/src/apis/*.js
+  Service: Emoji Mart
+  Description: Customizable emoji picker component for React
+  Version: 3.0.1 - Latest version with expanded emoji set
+    - Realtime-Chat/clients/src/pages/Chat.jsx
+
+Convert It To `Target Services` In Group Component Libraries:
+  Service: Material-UI
+  Description: React UI framework for building responsive web applications
+  Version: 5.11.0 - Latest version with improved customization options
+    - Realtime-Chat/clients/src/components/Model.jsx
+
+Group: Design Systems
+
+For These `Source Services` In Group Design Systems:
+  Associated Files:
+  Associated Files:
+  Service: Tailwind CSS
+  Description: Utility-first CSS framework for rapidly building custom user interfaces
+  Version: 3.2.4 - Latest version with improved customization features
+    - Realtime-Chat/clients/tailwind.config.js
+
+Convert It To `Target Services` In Group Design Systems:
+  Service: Tailwind CSS
+  Description: Utility-first CSS framework for rapidly building custom user interfaces
+  Version: 3.2.4 - Latest version with improved customization features
+    - Realtime-Chat/clients/tailwind.config.js
+
+Group: Client-Side Routing
+
+For These `Source Services` In Group Client-Side Routing:
+  Associated Files:
+  Associated Files:
+  Service: React Router
+  Description: Routing library for React applications
+  Version: 6.6.1 - Latest version with improved TypeScript support
+    - Realtime-Chat/clients/src/App.js
+    - Realtime-Chat/clients/src/pages/*.jsx
+
+Convert It To `Target Services` In Group Client-Side Routing:
+  Service: React Router
+  Description: Routing library for React applications
+  Version: 6.6.1 - Latest version with improved TypeScript support
+    - Realtime-Chat/clients/src/App.js
+    - Realtime-Chat/clients/src/pages/*.jsx
+
+Group: Data Management
+
+For These `Source Services` In Group Data Management:
+  Associated Files:
+  Associated Files:
+  Associated Files:
+  Service: Redux
+  Description: State management library for JavaScript applications
+  Version: 4.2.0 - Latest version with improved TypeScript support
+    - Realtime-Chat/clients/src/store.js
+    - Realtime-Chat/clients/src/redux/*.js
+  Service: Axios
+  Description: Promise-based HTTP client for making API requests
+  Version: 1.2.1 - Latest version with improved error handling
+    - Realtime-Chat/clients/src/apis/*.js
+
+Convert It To `Target Services` In Group Data Management:
+  Service: Redux
+  Description: State management library for JavaScript applications
+  Version: 4.2.0 - Latest version with improved TypeScript support
+    - Realtime-Chat/clients/src/store.js
+    - Realtime-Chat/clients/src/redux/*.js
+
+Group: Document Stores
+
+For These `Source Services` In Group Document Stores:
+  Associated Files:
+  Associated Files:
+  Service: MongoDB
+  Description: NoSQL database for storing application data
+  Version: 5.0.14 - Latest stable release with improved performance
+    - Realtime-Chat/server/mongoDB/connection.js
+    - Realtime-Chat/server/models/*.js
+    - Realtime-Chat/server/controllers/*.js
+
+Convert It To `Target Services` In Group Document Stores:
+  Service: MongoDB
+  Description: NoSQL database for storing application data
+  Version: 5.0.14 - Latest stable release with improved performance
+    - Realtime-Chat/server/mongoDB/connection.js
+    - Realtime-Chat/server/models/*.js
+    - Realtime-Chat/server/controllers/*.js
+
+Group: Identity & Access
+
+For These `Source Services` In Group Identity & Access:
+  Associated Files:
+  Associated Files:
+  Associated Files:
+  Service: Google Auth
+  Description: Authentication service provided by Google for user sign-in
+  Version: 2.16.0 - Latest version with improved security features
+    - Realtime-Chat/clients/src/pages/Login.jsx
+    - Realtime-Chat/clients/src/pages/Regsiter.jsx
+  Service: jsonwebtoken
+  Description: Library for generating and verifying JSON Web Tokens (JWT)
+  Version: 9.0.0 - Latest version with improved security features
+    - Realtime-Chat/server/models/userModel.js
+    - Realtime-Chat/server/middleware/user.js
+
+Convert It To `Target Services` In Group Identity & Access:
+  Service: Google Auth
+  Description: Authentication service provided by Google for user sign-in
+  Version: 2.16.0 - Latest version with improved security features
+    - Realtime-Chat/clients/src/pages/Login.jsx
+    - Realtime-Chat/clients/src/pages/Regsiter.jsx
+
+Group: Secret Management
+
+For These `Source Services` In Group Secret Management:
+  Associated Files:
+  Associated Files:
+  Service: dotenv
+  Description: Module for loading environment variables from a .env file
+  Version: 16.0.3 - Latest version with improved security features
+    - Realtime-Chat/server/index.js
+
+Convert It To `Target Services` In Group Secret Management:
+  Service: dotenv
+  Description: Module for loading environment variables from a .env file
+  Version: 16.0.3 - Latest version with improved security features
+    - Realtime-Chat/server/index.js
+
+Group: Network Security
+
+For These `Source Services` In Group Network Security:
+  Associated Files:
+  Associated Files:
+  Service: cors
+  Description: Middleware for enabling Cross-Origin Resource Sharing (CORS)
+  Version: 2.8.5 - Latest stable release
+    - Realtime-Chat/server/index.js
+
+Convert It To `Target Services` In Group Network Security:
+  Service: cors
+  Description: Middleware for enabling Cross-Origin Resource Sharing (CORS)
+  Version: 2.8.5 - Latest stable release
+    - Realtime-Chat/server/index.js
+
+Group: Network Protocols
+
+For These `Source Services` In Group Network Protocols:
+  Associated Files:
+  Associated Files:
+  Service: Socket.IO
+  Description: Library for real-time, bidirectional communication between web clients and servers
+  Version: 4.5.4 - Latest version with improved performance
+    - Realtime-Chat/server/index.js
+    - Realtime-Chat/clients/src/pages/Chat.jsx
+
+Convert It To `Target Services` In Group Network Protocols:
+  Service: Socket.IO
+  Description: Library for real-time, bidirectional communication between web clients and servers
+  Version: 4.5.4 - Latest version with improved performance
+    - Realtime-Chat/server/index.js
+    - Realtime-Chat/clients/src/pages/Chat.jsx
+
+Group: Others
+
+For These `Source Services` In Group Others:
+  Associated Files:
+  Associated Files:
+  Associated Files:
+  Service: React
+  Description: JavaScript library for building user interfaces
+  Version: 18.2.0 - Latest version with improved concurrent rendering
+    - Realtime-Chat/clients/src/index.js
+    - Realtime-Chat/clients/src/App.js
+  Service: bcryptjs
+  Description: Library for hashing and comparing passwords
+  Version: 2.4.3 - Latest stable release
+    - Realtime-Chat/server/models/userModel.js
+    - Realtime-Chat/server/controllers/user.js
+
+Convert It To `Target Services` In Group Others:
+  Service: React
+  Description: JavaScript library for building user interfaces
+  Version: 18.2.0 - Latest version with improved concurrent rendering
+    - Realtime-Chat/clients/src/index.js
+    - Realtime-Chat/clients/src/App.js
+
+    
+        ## Coding Language Swaps
+          - Convert `javascript` in the code group `Frontend` to the target language `javascript version:Latest LTS` by adhering to the 'When to Apply' and 'When Not to Apply' conditions.
+  - When to Apply: 
+  - When Not to Apply: 
+
+  - Convert `No source language` in the code group `Backend` to the target language `python version:python3.7` by adhering to the 'When to Apply' and 'When Not to Apply' conditions.
+  - When to Apply: 
+  - When Not to Apply: 
+
+    
