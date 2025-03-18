@@ -1,0 +1,35 @@
+# Core dependencies
+Flask==2.1.0
+SQLAlchemy==1.4.31
+Flasgger==0.9.5
+
+# Database
+psycopg2-binary==2.9.3
+Flask-SQLAlchemy==2.5.1
+Flask-Migrate==3.1.0
+
+# API and Authentication
+Flask-RESTful==0.3.9
+Flask-JWT-Extended==4.3.1
+
+# Security
+Flask-Bcrypt==0.7.1
+Flask-Talisman==0.8.1
+
+# CORS
+Flask-CORS==3.0.10
+
+# Environment variables
+python-dotenv==0.19.2
+
+# Testing
+pytest==7.1.1
+
+# Production server
+gunicorn==20.1.0
+
+# Task processing (if needed)
+celery==5.2.3
+
+# Additional utilities
+requests==2.27.1
