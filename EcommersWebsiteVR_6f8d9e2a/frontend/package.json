@@ -1,0 +1,52 @@
+{
+  "name": "ecommerce-vr-frontend",
+  "version": "1.0.0",
+  "description": "Frontend for E-commerce Website with VR capabilities",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "lint": "eslint .",
+    "format": "prettier --write \"**/*.{js,jsx,json,md}\""
+  },
+  "dependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-router-dom": "^5.2.0",
+    "redux": "^4.1.0",
+    "react-redux": "^7.2.4",
+    "styled-components": "^5.3.0",
+    "three": "^0.130.1",
+    "axios": "^0.21.1"
+  },
+  "devDependencies": {
+    "react-scripts": "4.0.3",
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^11.2.7",
+    "@testing-library/user-event": "^12.8.3",
+    "eslint": "^7.30.0",
+    "eslint-config-react-app": "^6.0.0",
+    "prettier": "^2.3.2"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "license": "MIT"
+}
