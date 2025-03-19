@@ -1,0 +1,27 @@
+# Core dependencies
+Flask==2.1.0
+Flask-RESTful==0.3.9
+Flask-SQLAlchemy==2.5.1
+SQLAlchemy==1.4.31
+
+# API Documentation
+flasgger==0.9.5
+
+# Testing
+pytest==7.1.2
+
+# Security
+Flask-Bcrypt==0.7.1
+PyJWT==2.3.0
+
+# CORS handling
+Flask-CORS==3.0.10
+
+# Input validation
+marshmallow==3.14.1
+
+# Environment variable management
+python-dotenv==0.19.2
+
+# Production WSGI server
+gunicorn==20.1.0
