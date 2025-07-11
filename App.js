@@ -18,6 +18,11 @@ function App() {
 
   const [alert, setAlert] = useState(null);
 // testing the feature
+   // const showAlert = (message, type) => {
+   //  setAlert({
+   //    msg: message,
+   //    type: type
+   //  })
   const showAlert = (message, type) => {
     setAlert({
       msg: message,
